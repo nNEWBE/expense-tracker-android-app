@@ -101,15 +101,19 @@
                 <!-- Edit Profile Button (inside card) -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnEditProfile"
-                    style="@style/Widget.Material3.Button.TonalButton"
                     android:layout_width="wrap_content"
+                    android:backgroundTint="@color/primary_light"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="Edit Profile"
                     android:textAllCaps="false"
+                    android:textColor="@color/primary"
                     android:fontFamily="@font/jakarta_sans"
-                    app:cornerRadius="20dp"
+                    app:cornerRadius="30dp"
                     app:icon="@drawable/ic_edit"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="20dp"
+                    app:iconTint="@color/primary"
                     app:iconSize="16dp"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -144,7 +148,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/jakarta_sans"
                         android:text="@string/sync_data"
-                        android:textColor="@color/primary"
+                        android:textColor="@color/white"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 

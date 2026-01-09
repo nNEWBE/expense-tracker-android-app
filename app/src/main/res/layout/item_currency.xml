@@ -17,13 +17,13 @@
 
         <TextView
             android:id="@+id/tvCurrencySymbol"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="$"
+            android:textColor="@color/primary_dark"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@color/primary_dark"
             android:fontFamily="@font/space_grotesk" />
     </com.google.android.material.card.MaterialCardView>
 
