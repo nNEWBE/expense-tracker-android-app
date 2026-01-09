@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -234,39 +235,36 @@ public class ProfileFragment extends Fragment {
     }
 
     private void showLogoutDialog() {
-        Dialog dialog = new Dialog(requireContext());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_confirm);
-
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.getWindow().setLayout(
-                    (int) (getResources().getDisplayMetrics().widthPixels * 0.85),
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-            );
-        }
+        View dialogView = LayoutInflater.from(requireContext())
+                .inflate(R.layout.dialog_confirm, null);
 
         // Setup dialog content
-        MaterialCardView iconContainer = dialog.findViewById(R.id.iconContainer);
-        iconContainer.setCardBackgroundColor(getResources().getColor(R.color.primary_light, null));
+        MaterialCardView iconContainer = dialogView.findViewById(R.id.iconContainer);
+        iconContainer.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.primary_light));
         
-        ImageView ivIcon = dialog.findViewById(R.id.ivDialogIcon);
+        ImageView ivIcon = dialogView.findViewById(R.id.ivDialogIcon);
         ivIcon.setImageResource(R.drawable.ic_logout);
-        ivIcon.setColorFilter(getResources().getColor(R.color.primary, null));
+        ivIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.primary));
 
-        TextView tvTitle = dialog.findViewById(R.id.tvDialogTitle);
+        TextView tvTitle = dialogView.findViewById(R.id.tvDialogTitle);
         tvTitle.setText(R.string.confirm_logout_title);
 
-        TextView tvMessage = dialog.findViewById(R.id.tvDialogMessage);
+        TextView tvMessage = dialogView.findViewById(R.id.tvDialogMessage);
         tvMessage.setText(R.string.confirm_logout_message);
 
-        MaterialButton btnCancel = dialog.findViewById(R.id.btnCancel);
+        MaterialButton btnConfirm = dialogView.findViewById(R.id.btnConfirm);
+        btnConfirm.setText(R.string.yes);
+        btnConfirm.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), R.color.primary));
+
+        androidx.appcompat.app.AlertDialog dialog = new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                .setView(dialogView)
+                .setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.bg_dialog))
+                .create();
+
+        MaterialButton btnCancel = dialogView.findViewById(R.id.btnCancel);
         btnCancel.setText(R.string.no);
         btnCancel.setOnClickListener(v -> dialog.dismiss());
 
-        MaterialButton btnConfirm = dialog.findViewById(R.id.btnConfirm);
-        btnConfirm.setText(R.string.yes);
-        btnConfirm.setBackgroundTintList(getResources().getColorStateList(R.color.primary, null));
         btnConfirm.setOnClickListener(v -> {
             dialog.dismiss();
             authManager.signOut();
@@ -278,33 +276,30 @@ public class ProfileFragment extends Fragment {
     }
 
     private void showDeleteAccountDialog() {
-        Dialog dialog = new Dialog(requireContext());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_confirm);
+        View dialogView = LayoutInflater.from(requireContext())
+                .inflate(R.layout.dialog_confirm, null);
 
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.getWindow().setLayout(
-                    (int) (getResources().getDisplayMetrics().widthPixels * 0.85),
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-            );
-        }
-
-        // Setup dialog content
-        ImageView ivIcon = dialog.findViewById(R.id.ivDialogIcon);
+        // Setup dialog content - keep red/error colors for delete action
+        ImageView ivIcon = dialogView.findViewById(R.id.ivDialogIcon);
         ivIcon.setImageResource(R.drawable.ic_delete);
 
-        TextView tvTitle = dialog.findViewById(R.id.tvDialogTitle);
+        TextView tvTitle = dialogView.findViewById(R.id.tvDialogTitle);
         tvTitle.setText(R.string.confirm_delete_account_title);
 
-        TextView tvMessage = dialog.findViewById(R.id.tvDialogMessage);
+        TextView tvMessage = dialogView.findViewById(R.id.tvDialogMessage);
         tvMessage.setText(R.string.confirm_delete_account_message);
 
-        MaterialButton btnCancel = dialog.findViewById(R.id.btnCancel);
+        MaterialButton btnConfirm = dialogView.findViewById(R.id.btnConfirm);
+        btnConfirm.setText(R.string.delete);
+
+        androidx.appcompat.app.AlertDialog dialog = new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                .setView(dialogView)
+                .setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.bg_dialog))
+                .create();
+
+        MaterialButton btnCancel = dialogView.findViewById(R.id.btnCancel);
         btnCancel.setOnClickListener(v -> dialog.dismiss());
 
-        MaterialButton btnConfirm = dialog.findViewById(R.id.btnConfirm);
-        btnConfirm.setText(R.string.delete);
         btnConfirm.setOnClickListener(v -> {
             dialog.dismiss();
             authManager.deleteAccount().addOnCompleteListener(task -> {

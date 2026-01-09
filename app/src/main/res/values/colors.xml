@@ -39,6 +39,7 @@
     <!-- Status -->
     <color name="success">#10B981</color>
     <color name="error">#EF4444</color>
+    <color name="error_light">#FEE2E2</color>
     <color name="warning">#F59E0B</color>
     <color name="warning_light">#FEF3C7</color>
     <color name="info">#3B82F6</color>

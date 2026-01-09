@@ -69,12 +69,12 @@
                     app:cardCornerRadius="45dp"
                     app:cardElevation="0dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="👤"
-                        android:textSize="40sp" />
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_person"
+                        app:tint="@color/primary" />
                 </com.google.android.material.card.MaterialCardView>
 
                 <TextView
