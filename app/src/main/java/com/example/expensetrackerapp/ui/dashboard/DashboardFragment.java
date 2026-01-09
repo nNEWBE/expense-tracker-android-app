@@ -109,12 +109,8 @@ public class DashboardFragment extends Fragment {
         binding.rvRecentTransactions.setNestedScrollingEnabled(false);
 
         // Category Filter Recycler
-        List<CategoryItem> categories = Arrays.asList(
-            new CategoryItem("All", R.drawable.ic_list),
-            new CategoryItem("Food", R.drawable.ic_restaurant),
-            new CategoryItem("Shopping", R.drawable.ic_shopping_bag),
-            new CategoryItem("Transport", R.drawable.ic_transport)
-        );
+        List<CategoryItem> categories = new ArrayList<>();
+        categories.add(new CategoryItem("All", R.drawable.ic_list));
         
         categoryAdapter = new CategoryAdapter(requireContext(), categories, category -> {
             currentCategory = category;
@@ -149,12 +145,51 @@ public class DashboardFragment extends Fragment {
         expenseRepository.getByDateRange(monthRange[0], monthRange[1]).observe(getViewLifecycleOwner(), expenses -> {
             if (expenses != null) {
                 allExpenses = expenses;
+                updateCategories(expenses); // Dynamic categories
                 filterTransactions();
             } else {
                 allExpenses = new ArrayList<>();
+                updateCategories(new ArrayList<>());
                 filterTransactions();
             }
         });
+    }
+
+    private void updateCategories(List<Expense> expenses) {
+        List<CategoryItem> categoryItems = new ArrayList<>();
+        // Always add "All" first
+        categoryItems.add(new CategoryItem("All", R.drawable.ic_list));
+
+        // Get unique categories using Stream API
+        List<String> uniqueCategories = expenses.stream()
+                .map(Expense::getCategory)
+                .distinct()
+                .sorted()
+                .collect(Collectors.toList());
+
+        for (String category : uniqueCategories) {
+            categoryItems.add(new CategoryItem(category, getCategoryIcon(category)));
+        }
+
+        if (categoryAdapter != null) {
+            categoryAdapter.updateData(categoryItems);
+        }
+    }
+
+    private int getCategoryIcon(String category) {
+        switch (category) {
+            case Constants.CATEGORY_FOOD: return R.drawable.ic_restaurant;
+            case Constants.CATEGORY_TRANSPORT: return R.drawable.ic_transport;
+            case Constants.CATEGORY_SHOPPING: return R.drawable.ic_shopping_bag;
+            case Constants.CATEGORY_BILLS: return R.drawable.ic_receipt;
+            case Constants.CATEGORY_ENTERTAINMENT: return R.drawable.ic_movie;
+            case Constants.CATEGORY_HEALTHCARE: return R.drawable.ic_medical; 
+            case Constants.CATEGORY_EDUCATION: return R.drawable.ic_school;
+            case Constants.CATEGORY_SALARY: return R.drawable.ic_attach_money;
+            case Constants.CATEGORY_INVESTMENT: return R.drawable.ic_trending_up;
+            case Constants.CATEGORY_OTHERS: return R.drawable.ic_more_horiz;
+            default: return R.drawable.ic_list;
+        }
     }
 
     private void filterTransactions() {
@@ -232,6 +267,12 @@ public class DashboardFragment extends Fragment {
             this.context = context;
             this.items = items;
             this.listener = listener;
+        }
+
+        public void updateData(List<CategoryItem> newItems) {
+            this.items = newItems;
+            this.selectedPosition = 0; // Reset selection to All when data updates
+            notifyDataSetChanged();
         }
 
         @NonNull
