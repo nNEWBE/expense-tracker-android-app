@@ -98,9 +98,9 @@
         app:contentInsetStart="0dp"
         app:contentInsetEnd="0dp"
         app:fabAlignmentMode="center"
-        app:fabCradleMargin="8dp"
-        app:fabCradleRoundedCornerRadius="32dp"
-        app:fabCradleVerticalOffset="4dp"
+        app:fabCradleMargin="0dp"
+        app:fabCradleRoundedCornerRadius="0dp"
+        app:fabCradleVerticalOffset="0dp"
         app:hideOnScroll="true"
         app:elevation="8dp">
 
@@ -128,6 +128,8 @@
         app:tint="@color/white"
         app:borderWidth="0dp"
         app:elevation="6dp"
-        app:layout_anchor="@id/bottomAppBar" />
+        app:layout_anchor="@id/bottomAppBar"
+        app:layout_anchorGravity="center"
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
