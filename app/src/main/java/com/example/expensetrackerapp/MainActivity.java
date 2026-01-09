@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
         preferenceManager.applyTheme(preferenceManager.getThemeMode());
 
         setupBottomNavigation();
+        setupFab();
         setupGuestBanner();
 
         // Load default fragment
@@ -56,48 +57,38 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
     }
 
     private void setupBottomNavigation() {
-        // Dashboard
-        binding.navDashboard.setOnClickListener(v -> {
-            selectNavItem(TAG_DASHBOARD);
-            loadFragment(new DashboardFragment(), TAG_DASHBOARD);
-        });
+        binding.bottomNavigation.setOnItemSelectedListener(item -> {
+            Fragment fragment;
+            String tag;
 
-        // Transactions
-        binding.navTransactions.setOnClickListener(v -> {
-            selectNavItem(TAG_TRANSACTIONS);
-            loadFragment(new TransactionsFragment(), TAG_TRANSACTIONS);
-        });
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_dashboard) {
+                fragment = new DashboardFragment();
+                tag = TAG_DASHBOARD;
+            } else if (itemId == R.id.nav_transactions) {
+                fragment = new TransactionsFragment();
+                tag = TAG_TRANSACTIONS;
+            } else if (itemId == R.id.nav_analytics) {
+                fragment = new AnalyticsFragment();
+                tag = TAG_ANALYTICS;
+            } else if (itemId == R.id.nav_profile) {
+                fragment = new ProfileFragment();
+                tag = TAG_PROFILE;
+            } else {
+                return false;
+            }
 
-        // Analytics
-        binding.navAnalytics.setOnClickListener(v -> {
-            selectNavItem(TAG_ANALYTICS);
-            loadFragment(new AnalyticsFragment(), TAG_ANALYTICS);
+            loadFragment(fragment, tag);
+            return true;
         });
+    }
 
-        // Profile
-        binding.navProfile.setOnClickListener(v -> {
-            selectNavItem(TAG_PROFILE);
-            loadFragment(new ProfileFragment(), TAG_PROFILE);
-        });
-
-        // FAB Add Button
+    private void setupFab() {
         binding.fabAdd.setOnClickListener(v -> {
+            // Show add expense bottom sheet
             AddExpenseBottomSheet bottomSheet = new AddExpenseBottomSheet();
             bottomSheet.show(getSupportFragmentManager(), "AddExpenseBottomSheet");
         });
-
-        // Set initial selection
-        selectNavItem(TAG_DASHBOARD);
-    }
-
-    private void selectNavItem(String tag) {
-        int activeColor = getResources().getColor(R.color.primary, getTheme());
-        int inactiveColor = getResources().getColor(R.color.text_hint, getTheme());
-
-        binding.ivDashboard.setColorFilter(tag.equals(TAG_DASHBOARD) ? activeColor : inactiveColor);
-        binding.ivTransactions.setColorFilter(tag.equals(TAG_TRANSACTIONS) ? activeColor : inactiveColor);
-        binding.ivAnalytics.setColorFilter(tag.equals(TAG_ANALYTICS) ? activeColor : inactiveColor);
-        binding.ivProfile.setColorFilter(tag.equals(TAG_PROFILE) ? activeColor : inactiveColor);
     }
 
     private void setupGuestBanner() {

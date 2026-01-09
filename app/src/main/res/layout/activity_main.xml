@@ -8,6 +8,7 @@
     android:background="@color/background"
     android:fitsSystemWindows="true">
 
+    <!-- Guest Banner -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/guestBanner"
         android:layout_width="match_parent"
@@ -88,122 +89,47 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="80dp" />
 
-    <!-- Custom Bottom Navigation Bar -->
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/bottomNavCard"
+    <!-- Bottom App Bar with FAB -->
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:cardBackgroundColor="@color/nav_background"
-        app:cardCornerRadius="0dp"
-        app:cardElevation="16dp">
+        android:backgroundTint="@color/nav_background"
+        app:fabAlignmentMode="center"
+        app:fabCradleMargin="8dp"
+        app:fabCradleRoundedCornerRadius="16dp"
+        app:fabCradleVerticalOffset="0dp"
+        app:hideOnScroll="true"
+        app:elevation="8dp">
 
-        <LinearLayout
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigation"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:gravity="center">
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:elevation="0dp"
+            app:itemIconTint="@color/bottom_nav_colors"
+            app:itemTextColor="@color/bottom_nav_colors"
+            app:labelVisibilityMode="unlabeled"
+            app:menu="@menu/bottom_navigation" />
+    </com.google.android.material.bottomappbar.BottomAppBar>
 
-            <!-- Dashboard -->
-            <LinearLayout
-                android:id="@+id/navDashboard"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:gravity="bottom|center"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <ImageView
-                    android:id="@+id/ivDashboard"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_home"
-                    app:tint="@color/primary" />
-            </LinearLayout>
-
-            <!-- Transactions -->
-            <LinearLayout
-                android:id="@+id/navTransactions"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:gravity="bottom|center"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <ImageView
-                    android:id="@+id/ivTransactions"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_list"
-                    app:tint="@color/text_hint" />
-            </LinearLayout>
-
-            <!-- Add Transaction (Center - Elevated) -->
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:clipChildren="false"
-                android:clipToPadding="false">
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fabAdd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|center"
-                    android:contentDescription="@string/add_expense"
-                    android:src="@drawable/ic_add"
-                    android:translationY="-10dp"
-                    app:backgroundTint="@color/primary"
-                    app:borderWidth="0dp"
-                    app:elevation="8dp"
-                    app:fabCustomSize="55dp"
-                    app:maxImageSize="30dp"
-                    app:tint="@color/white" />
-            </FrameLayout>
-
-            <!-- Analytics -->
-            <LinearLayout
-                android:id="@+id/navAnalytics"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:gravity="bottom|center"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <ImageView
-                    android:id="@+id/ivAnalytics"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_chart"
-                    app:tint="@color/text_hint" />
-            </LinearLayout>
-
-            <!-- Profile -->
-            <LinearLayout
-                android:id="@+id/navProfile"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:gravity="bottom|center"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <ImageView
-                    android:id="@+id/ivProfile"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_person"
-                    app:tint="@color/text_hint" />
-            </LinearLayout>
-
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+    <!-- Floating Action Button -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/add_expense"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/primary"
+        app:tint="@color/white"
+        app:borderWidth="0dp"
+        app:elevation="6dp"
+        app:fabCustomSize="64dp"
+        app:maxImageSize="32dp" 
+        app:layout_anchor="@id/bottomAppBar"
+        android:translationY="-12dp"
+         />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
