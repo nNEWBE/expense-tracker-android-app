@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.expensetrackerapp.R;
@@ -61,14 +60,16 @@ public class ProfileFragment extends Fragment {
             binding.tvUserName.setText("Guest User");
             binding.tvUserEmail.setText("Not logged in");
             binding.cardGuestBanner.setVisibility(View.VISIBLE);
-            binding.btnLogout.setText("Sign In");
+            binding.tvLogoutLabel.setText("Sign In");
             binding.btnDeleteAccount.setVisibility(View.GONE);
+            binding.dividerDeleteAccount.setVisibility(View.GONE);
         } else {
             binding.tvUserName.setText(authManager.getCurrentUser().getDisplayName());
             binding.tvUserEmail.setText(authManager.getCurrentUserEmail());
             binding.cardGuestBanner.setVisibility(View.GONE);
-            binding.btnLogout.setText(R.string.logout);
+            binding.tvLogoutLabel.setText(R.string.logout);
             binding.btnDeleteAccount.setVisibility(View.VISIBLE);
+            binding.dividerDeleteAccount.setVisibility(View.VISIBLE);
         }
 
         // Set current theme selection
@@ -92,7 +93,6 @@ public class ProfileFragment extends Fragment {
     private void setupClickListeners() {
         // Edit Profile
         binding.btnEditProfile.setOnClickListener(v -> {
-            // TODO: Implement edit profile
             Toast.makeText(requireContext(), "Edit Profile coming soon", Toast.LENGTH_SHORT).show();
         });
 
@@ -107,7 +107,6 @@ public class ProfileFragment extends Fragment {
 
         // App lock
         binding.cardAppLock.setOnClickListener(v -> {
-            // TODO: Implement biometric setup
             Toast.makeText(requireContext(), "Coming soon", Toast.LENGTH_SHORT).show();
         });
 
@@ -146,7 +145,7 @@ public class ProfileFragment extends Fragment {
                 .inflate(R.layout.dialog_budget, null);
         TextInputEditText etBudget = dialogView.findViewById(R.id.etBudget);
 
-        new MaterialAlertDialogBuilder(requireContext())
+        new MaterialAlertDialogBuilder(requireContext(), R.style.Theme_App_Dialog)
                 .setTitle(R.string.monthly_budget)
                 .setView(dialogView)
                 .setPositiveButton(R.string.save, (dialog, which) -> {
@@ -169,7 +168,7 @@ public class ProfileFragment extends Fragment {
         String[] currencies = CurrencyUtils.getCurrencyDisplayNames();
         String[] currencyCodes = CurrencyUtils.getSupportedCurrencies();
 
-        new MaterialAlertDialogBuilder(requireContext())
+        new MaterialAlertDialogBuilder(requireContext(), R.style.Theme_App_Dialog)
                 .setTitle(R.string.currency)
                 .setItems(currencies, (dialog, which) -> {
                     String selectedCurrency = currencyCodes[which];
@@ -189,7 +188,7 @@ public class ProfileFragment extends Fragment {
 
         int currentSelection = preferenceManager.getThemeMode();
 
-        new MaterialAlertDialogBuilder(requireContext())
+        new MaterialAlertDialogBuilder(requireContext(), R.style.Theme_App_Dialog)
                 .setTitle(R.string.theme)
                 .setSingleChoiceItems(themes, currentSelection, (dialog, which) -> {
                     preferenceManager.setThemeMode(which);
@@ -205,24 +204,20 @@ public class ProfileFragment extends Fragment {
                 getString(R.string.export_pdf)
         };
 
-        new MaterialAlertDialogBuilder(requireContext())
+        new MaterialAlertDialogBuilder(requireContext(), R.style.Theme_App_Dialog)
                 .setTitle(R.string.export_data)
                 .setItems(options, (dialog, which) -> {
                     if (which == 0) {
-                        // Export CSV
                         Toast.makeText(requireContext(), "Exporting CSV...", Toast.LENGTH_SHORT).show();
-                        // TODO: Implement CSV export
                     } else {
-                        // Export PDF
                         Toast.makeText(requireContext(), "Exporting PDF...", Toast.LENGTH_SHORT).show();
-                        // TODO: Implement PDF export
                     }
                 })
                 .show();
     }
 
     private void showLogoutDialog() {
-        new MaterialAlertDialogBuilder(requireContext())
+        new MaterialAlertDialogBuilder(requireContext(), R.style.Theme_App_Dialog)
                 .setTitle(R.string.confirm_logout_title)
                 .setMessage(R.string.confirm_logout_message)
                 .setPositiveButton(R.string.yes, (dialog, which) -> {
@@ -235,7 +230,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void showDeleteAccountDialog() {
-        new MaterialAlertDialogBuilder(requireContext())
+        new MaterialAlertDialogBuilder(requireContext(), R.style.Theme_App_Dialog)
                 .setTitle(R.string.confirm_delete_account_title)
                 .setMessage(R.string.confirm_delete_account_message)
                 .setPositiveButton(R.string.delete, (dialog, which) -> {
