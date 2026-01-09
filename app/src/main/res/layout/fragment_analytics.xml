@@ -137,7 +137,6 @@
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="-30dp"
                 app:cardBackgroundColor="@color/card_background"
-                app:surfaceTintColor="@android:color/transparent"
                 app:cardCornerRadius="24dp"
                 app:cardElevation="4dp">
 
