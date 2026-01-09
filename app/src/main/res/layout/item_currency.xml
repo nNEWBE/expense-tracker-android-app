@@ -9,8 +9,8 @@
     android:background="@drawable/bg_selectable_item">
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/primary_light"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp">
@@ -21,10 +21,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="$"
-            android:textColor="@color/primary_dark"
+            android:textColor="@color/primary"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:fontFamily="@font/space_grotesk" />
+            android:includeFontPadding="false" />
     </com.google.android.material.card.MaterialCardView>
 
     <LinearLayout
