@@ -33,18 +33,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
-                android:id="@+id/btnEditProfile"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/bg_fab_gradient"
-                android:src="@drawable/ic_edit"
-                app:tint="@color/white"
-                android:elevation="4dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tvTitle"
-                app:layout_constraintBottom_toBottomOf="@id/tvTitle" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- User Info Card (Overlapping) -->
@@ -178,50 +166,7 @@
             android:background="@drawable/bg_card_rounded"
             android:elevation="2dp">
 
-            <!-- Budget Setting -->
-            <LinearLayout
-                android:id="@+id/cardBudget"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="16dp"
-                android:background="?attr/selectableItemBackground">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_wallet"
-                    app:tint="@color/primary" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="16dp"
-                    android:fontFamily="@font/jakarta_sans"
-                    android:text="@string/monthly_budget"
-                    android:textColor="@color/text_primary"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/tvBudgetValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:fontFamily="@font/jakarta_sans"
-                    android:text="Not set"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/ic_chevron_right"
-                    app:tint="@color/text_hint" />
-            </LinearLayout>
-
-            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider" android:layout_marginHorizontal="16dp"/>
 
             <!-- Currency Setting -->
             <LinearLayout
@@ -333,40 +278,7 @@
             android:background="@drawable/bg_card_rounded"
             android:elevation="2dp">
 
-            <!-- Notifications -->
-            <LinearLayout
-                android:id="@+id/cardNotifications"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="16dp"
-                android:background="?attr/selectableItemBackground">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_notification"
-                    app:tint="@color/primary" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="16dp"
-                    android:fontFamily="@font/jakarta_sans"
-                    android:text="@string/notifications"
-                    android:textColor="@color/text_primary"
-                    android:textSize="15sp" />
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/ic_chevron_right"
-                    app:tint="@color/text_hint" />
-            </LinearLayout>
-
-            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider" android:layout_marginHorizontal="16dp"/>
 
             <!-- Export Data -->
             <LinearLayout
@@ -394,11 +306,17 @@
                     android:textColor="@color/text_primary"
                     android:textSize="15sp" />
 
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/ic_chevron_right"
-                    app:tint="@color/text_hint" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Coming Soon"
+                    android:textSize="10sp"
+                    android:textColor="@color/text_secondary"
+                    android:background="@drawable/bg_pill_expense"
+                    android:backgroundTint="#F3F4F6"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="4dp"
+                    android:fontFamily="@font/jakarta_sans"/>
             </LinearLayout>
 
             <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider" android:layout_marginHorizontal="16dp"/>
@@ -429,11 +347,17 @@
                     android:textColor="@color/text_primary"
                     android:textSize="15sp" />
 
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/ic_chevron_right"
-                    app:tint="@color/text_hint" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Coming Soon"
+                    android:textSize="10sp"
+                    android:textColor="@color/text_secondary"
+                    android:background="@drawable/bg_pill_expense"
+                    android:backgroundTint="#F3F4F6"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="4dp"
+                    android:fontFamily="@font/jakarta_sans"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -452,6 +376,7 @@
             android:textColor="@color/error"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:backgroundTint="@android:color/transparent"
             app:cornerRadius="16dp"
             app:icon="@drawable/ic_logout"
             app:iconTint="@color/error"

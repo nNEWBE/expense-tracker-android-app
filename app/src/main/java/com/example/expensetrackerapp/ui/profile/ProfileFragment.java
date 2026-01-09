@@ -90,9 +90,6 @@ public class ProfileFragment extends Fragment {
     }
 
     private void setupClickListeners() {
-        // Budget setting
-        binding.cardBudget.setOnClickListener(v -> showBudgetDialog());
-
         // Edit Profile
         binding.btnEditProfile.setOnClickListener(v -> {
             // TODO: Implement edit profile
@@ -105,14 +102,8 @@ public class ProfileFragment extends Fragment {
         // Theme setting
         binding.cardTheme.setOnClickListener(v -> showThemeDialog());
 
-        // Notifications
-        binding.cardNotifications.setOnClickListener(v -> {
-            // TODO: Open notification settings
-            Toast.makeText(requireContext(), "Coming soon", Toast.LENGTH_SHORT).show();
-        });
-
         // Export data
-        binding.cardExport.setOnClickListener(v -> showExportDialog());
+        binding.cardExport.setOnClickListener(v -> Toast.makeText(requireContext(), "Coming soon", Toast.LENGTH_SHORT).show());
 
         // App lock
         binding.cardAppLock.setOnClickListener(v -> {
@@ -146,9 +137,6 @@ public class ProfileFragment extends Fragment {
                 if (profile.getName() != null && !profile.getName().isEmpty()) {
                     binding.tvUserName.setText(profile.getName());
                 }
-
-                String currency = preferenceManager.getCurrency();
-                binding.tvBudgetValue.setText(CurrencyUtils.formatAmount(profile.getMonthlyBudget(), currency));
             }
         });
     }
