@@ -137,6 +137,9 @@ public class AnalyticsFragment extends Fragment {
         binding.pieChart.setHighlightPerTapEnabled(true);
         binding.pieChart.setEntryLabelColor(Color.WHITE);
         binding.pieChart.setEntryLabelTextSize(12f);
+        
+        binding.pieChart.setNoDataTextColor(ContextCompat.getColor(requireContext(), R.color.text_secondary));
+        binding.pieChart.setNoDataText("No data available");
 
         Legend legend = binding.pieChart.getLegend();
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
@@ -157,6 +160,9 @@ public class AnalyticsFragment extends Fragment {
         binding.barChart.setPinchZoom(false);
         binding.barChart.setDrawValueAboveBar(false);
         binding.barChart.setScaleEnabled(false);
+        
+        binding.barChart.setNoDataTextColor(ContextCompat.getColor(requireContext(), R.color.text_secondary));
+        binding.barChart.setNoDataText("No trend data available");
         
         XAxis xAxis = binding.barChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
