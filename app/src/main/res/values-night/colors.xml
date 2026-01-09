@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Colors - Dark Mode -->
+    <color name="primary">#8B84FF</color>
+    <color name="primary_dark">#6C63FF</color>
+    <color name="primary_light">#2A2850</color>
+    <color name="primary_variant">#9D97FF</color>
+    
+    <!-- Secondary Colors -->
+    <color name="secondary">#03DAC6</color>
+    <color name="secondary_dark">#00C4B4</color>
+    <color name="secondary_light">#1A3A38</color>
+    
+    <!-- Background Colors -->
+    <color name="background">#0F0F1A</color>
+    <color name="surface">#1A1A2E</color>
+    <color name="surface_variant">#252542</color>
+    <color name="splash_background">#0F0F1A</color>
+    
+    <!-- Text Colors -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#9CA3AF</color>
+    <color name="text_hint">#6B7280</color>
+    <color name="text_on_primary">#FFFFFF</color>
+    
+    <!-- Status Colors -->
+    <color name="success">#34D399</color>
+    <color name="success_light">#1A3D2E</color>
+    <color name="error">#F87171</color>
+    <color name="error_light">#3D1A1A</color>
+    <color name="warning">#FBBF24</color>
+    <color name="warning_light">#3D351A</color>
+    <color name="info">#60A5FA</color>
+    <color name="info_light">#1A2840</color>
+    
+    <!-- Category Colors -->
+    <color name="category_food">#FF8A8A</color>
+    <color name="category_transport">#6EE7E0</color>
+    <color name="category_shopping">#67CAE0</color>
+    <color name="category_bills">#B0DDC8</color>
+    <color name="category_entertainment">#E8C0E8</color>
+    <color name="category_healthcare">#B2E4DA</color>
+    <color name="category_education">#F9E68C</color>
+    <color name="category_salary">#74D842</color>
+    <color name="category_investment">#9455E8</color>
+    <color name="category_others">#AFB8B8</color>
+    
+    <!-- Chart Colors -->
+    <color name="chart_1">#8B84FF</color>
+    <color name="chart_2">#FF8A8A</color>
+    <color name="chart_3">#6EE7E0</color>
+    <color name="chart_4">#F9E68C</color>
+    <color name="chart_5">#E8C0E8</color>
+    <color name="chart_6">#67CAE0</color>
+    
+    <!-- UI Elements -->
+    <color name="divider">#374151</color>
+    <color name="card_background">#1A1A2E</color>
+    <color name="ripple">#338B84FF</color>
+    <color name="shadow">#00000000</color>
+    
+    <!-- Income/Expense Colors -->
+    <color name="income">#34D399</color>
+    <color name="expense">#F87171</color>
+</resources>

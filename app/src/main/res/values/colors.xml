@@ -1,5 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Brand Colors (Emerald Green from Image) -->
+    <color name="primary">#10B981</color>
+    <color name="primary_dark">#059669</color>
+    <color name="primary_light">#D1FAE5</color>
+    <color name="primary_variant">#34D399</color>
+
+    <!-- Secondary Colors (Blue/Dark) -->
+    <color name="secondary">#3B82F6</color>
+    <color name="secondary_dark">#1E40AF</color>
+    <color name="secondary_light">#DBEAFE</color>
+
+    <!-- Backgrounds -->
+    <color name="background">#F3F4F6</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#F9FAFB</color>
+    
+    <!-- Dark Navigation -->
+    <color name="nav_background">#111827</color>
+    <color name="nav_item_selected">#10B981</color>
+    <color name="nav_item_unselected">#9CA3AF</color>
+
+
+    <!-- Accent Colors from Image -->
+    <color name="accent_purple">#8B5CF6</color>
+    <color name="accent_orange">#F59E0B</color>
+    <color name="accent_red">#EF4444</color>
+    <color name="accent_blue">#3B82F6</color>
+    <color name="accent_pink">#EC4899</color>
+
+    <!-- Text -->
+    <color name="text_primary">#111827</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="text_hint">#9CA3AF</color>
+    <color name="text_on_primary">#FFFFFF</color>
+    <color name="text_on_dark">#F3F4F6</color>
+
+    <!-- Status -->
+    <color name="success">#10B981</color>
+    <color name="error">#EF4444</color>
+    <color name="warning">#F59E0B</color>
+    <color name="warning_light">#FEF3C7</color>
+    <color name="info">#3B82F6</color>
+    <color name="info_light">#DBEAFE</color>
+    
+    <!-- Chart Colors -->
+    <color name="chart_1">#10B981</color> <!-- Green -->
+    <color name="chart_2">#8B5CF6</color> <!-- Purple -->
+    <color name="chart_3">#F59E0B</color> <!-- Orange -->
+    <color name="chart_4">#3B82F6</color> <!-- Blue -->
+    <color name="chart_5">#EF4444</color>
+    <color name="chart_6">#EC4899</color>
+    
+    <!-- Card & Misc -->
+    <color name="card_background">#FFFFFF</color>
+    <color name="card_elevated">#FFFFFF</color>
+    <color name="divider">#E5E7EB</color>
+    <color name="ripple">#1A10B981</color>
+    <color name="shadow">#0F172A</color>
+    
+    <!-- Income/Expense -->
+    <color name="income">#10B981</color>
+    <color name="income_light">#D1FAE5</color>
+    <color name="expense">#EF4444</color>
+    <color name="expense_light">#FEE2E2</color>
+    
+    <!-- Basic -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <!-- Gradient placeholders -->
+    <color name="gradient_start">#10B981</color>
+    <color name="gradient_middle">#34D399</color>
+    <color name="gradient_end">#6EE7B7</color>
+    <color name="splash_background">#10B981</color>
+    
+     <!-- Category Colors (Rich & Vibrant) -->
+    <color name="category_food">#F43F5E</color>
+    <color name="category_transport">#06B6D4</color>
+    <color name="category_shopping">#EC4899</color>
+    <color name="category_bills">#8B5CF6</color>
+    <color name="category_entertainment">#F97316</color>
+    <color name="category_healthcare">#10B981</color>
+    <color name="category_education">#6366F1</color>
+    <color name="category_salary">#22C55E</color>
+    <color name="category_investment">#7C3AED</color>
+    <color name="category_others">#64748B</color>
+    
+    <!-- Shimmer/Loading Colors -->
+    <color name="shimmer_base">#E2E8F0</color>
+    <color name="shimmer_highlight">#F8FAFC</color>
+    
+    <!-- Glassmorphism -->
+    <color name="glass_background">#33FFFFFF</color>
+    <color name="glass_border">#33FFFFFF</color>
 </resources>
