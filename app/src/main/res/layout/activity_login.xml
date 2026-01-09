@@ -167,7 +167,7 @@
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnLogin"
                         android:layout_width="match_parent"
-                        android:layout_height="56dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
                         android:fontFamily="@font/jakarta_sans"
                         android:text="Sign In"
@@ -226,13 +226,18 @@
             <!-- Continue as Guest Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnGuest"
-                style="@style/Widget.App.Button.Outlined"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="24dp"
                 android:text="Continue as Guest"
                 app:icon="@drawable/ic_person"
+                android:background="@null"
+                android:textColor="@color/primary"
+                app:strokeColor="@color/primary"
+                app:strokeWidth="2dp"
+                android:backgroundTint="@color/white"
+                app:cornerRadius="16dp"
                 app:iconGravity="textStart"
                 app:iconPadding="12dp"
                 app:iconTint="@color/primary" />

@@ -54,14 +54,15 @@
                     android:id="@+id/tvTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginBottom="24dp"
+                    android:layout_marginBottom="84dp"
                     android:fontFamily="@font/space_grotesk"
                     android:text="Create Account"
                     android:textColor="@color/white"
                     android:textSize="32sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.496"
                     app:layout_constraintStart_toStartOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -176,7 +177,7 @@
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnRegister"
                         android:layout_width="match_parent"
-                        android:layout_height="56dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="32dp"
                         android:fontFamily="@font/jakarta_sans"
                         android:text="Create Account"
