@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
     private static final String TAG_ANALYTICS = "analytics";
     private static final String TAG_PROFILE = "profile";
 
-    private String currentFragmentTag = TAG_DASHBOARD;
+    private String currentFragmentTag = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
