@@ -72,7 +72,7 @@ public class AddExpenseBottomSheet extends BottomSheetDialogFragment {
         expenseRepository = ExpenseRepository.getInstance(requireContext());
         preferenceManager = PreferenceManager.getInstance(requireContext());
 
-        setupCategoryDropdown();
+
         setupDatePicker();
         setupTypeToggle();
         setupButtons();
@@ -85,19 +85,31 @@ public class AddExpenseBottomSheet extends BottomSheetDialogFragment {
         }
     }
 
-    private void setupCategoryDropdown() {
-        String[] categories = {
-                Constants.CATEGORY_FOOD,
-                Constants.CATEGORY_TRANSPORT,
-                Constants.CATEGORY_SHOPPING,
-                Constants.CATEGORY_BILLS,
-                Constants.CATEGORY_ENTERTAINMENT,
-                Constants.CATEGORY_HEALTHCARE,
-                Constants.CATEGORY_EDUCATION,
-                Constants.CATEGORY_SALARY,
-                Constants.CATEGORY_INVESTMENT,
-                Constants.CATEGORY_OTHERS
-        };
+    private void setupCategoryDropdown(boolean isExpense) {
+        String[] categories;
+        if (isExpense) {
+            categories = new String[]{
+                    Constants.CATEGORY_FOOD,
+                    Constants.CATEGORY_TRANSPORT,
+                    Constants.CATEGORY_SHOPPING,
+                    Constants.CATEGORY_BILLS,
+                    Constants.CATEGORY_ENTERTAINMENT,
+                    Constants.CATEGORY_HEALTHCARE,
+                    Constants.CATEGORY_EDUCATION,
+                    Constants.CATEGORY_OTHERS
+            };
+        } else {
+            categories = new String[]{
+                    Constants.CATEGORY_SALARY,
+                    Constants.CATEGORY_BUSINESS,
+                    Constants.CATEGORY_INVESTMENT,
+                    Constants.CATEGORY_FREELANCE,
+                    Constants.CATEGORY_GIFT,
+                    Constants.CATEGORY_RENTAL,
+                    Constants.CATEGORY_REFUND,
+                    Constants.CATEGORY_OTHERS
+            };
+        }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 requireContext(),
@@ -132,13 +144,19 @@ public class AddExpenseBottomSheet extends BottomSheetDialogFragment {
     private void setupTypeToggle() {
         binding.toggleType.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
             if (isChecked) {
-                isExpenseType = checkedId == R.id.btnExpense;
-                updateTitle();
+                boolean newTypeIsExpense = checkedId == R.id.btnExpense;
+                if (isExpenseType != newTypeIsExpense) {
+                    isExpenseType = newTypeIsExpense;
+                    setupCategoryDropdown(isExpenseType);
+                    binding.actvCategory.setText("", false); // Clear invalid category
+                    updateTitle();
+                }
             }
         });
 
         // Default to expense
         binding.btnExpense.setChecked(true);
+        setupCategoryDropdown(true); // Initial setup
     }
 
     private void updateTitle() {
@@ -168,20 +186,22 @@ public class AddExpenseBottomSheet extends BottomSheetDialogFragment {
 
             if (existingExpense != null) {
                 requireActivity().runOnUiThread(() -> {
-                    // Populate fields
-                    binding.etAmount.setText(String.valueOf(existingExpense.getAmount()));
-                    binding.actvCategory.setText(existingExpense.getCategory(), false);
-                    binding.etNotes.setText(existingExpense.getNotes());
-
                     selectedDate = existingExpense.getDate();
                     updateDateDisplay();
 
                     isExpenseType = Constants.TYPE_EXPENSE.equals(existingExpense.getType());
+                    setupCategoryDropdown(isExpenseType); // Manually update adapter based on type
+                    
                     if (isExpenseType) {
-                        binding.btnExpense.setChecked(true);
+                        if (!binding.btnExpense.isChecked()) binding.btnExpense.setChecked(true);
                     } else {
-                        binding.btnIncome.setChecked(true);
+                        if (!binding.btnIncome.isChecked()) binding.btnIncome.setChecked(true);
                     }
+
+                    // Populate fields AFTER adapter is ready
+                    binding.etAmount.setText(String.valueOf(existingExpense.getAmount()));
+                    binding.actvCategory.setText(existingExpense.getCategory(), false);
+                    binding.etNotes.setText(existingExpense.getNotes());
 
                     updateTitle();
                 });

@@ -68,6 +68,13 @@ public class Constants {
     public static final String CATEGORY_SALARY = "Salary";
     public static final String CATEGORY_INVESTMENT = "Investment";
     public static final String CATEGORY_OTHERS = "Others";
+    
+    // Income Categories
+    public static final String CATEGORY_BUSINESS = "Business";
+    public static final String CATEGORY_FREELANCE = "Freelance";
+    public static final String CATEGORY_GIFT = "Gift";
+    public static final String CATEGORY_RENTAL = "Rental";
+    public static final String CATEGORY_REFUND = "Refund";
 
     // Date filter types
     public static final int FILTER_ALL = 0;
