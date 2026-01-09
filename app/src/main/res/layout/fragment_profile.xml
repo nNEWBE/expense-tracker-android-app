@@ -399,6 +399,7 @@
 
         <!-- Delete Account Button -->
         <com.google.android.material.button.MaterialButton
+            android:backgroundTint="@android:color/transparent"
             android:id="@+id/btnDeleteAccount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -407,7 +408,6 @@
             android:layout_marginBottom="32dp"
             android:fontFamily="@font/jakarta_sans"
             android:text="@string/delete_account"
-            android:backgroundTint="@color/white"
             app:icon="@drawable/ic_delete"
             app:iconTint="@color/error"
             app:iconPadding="12dp"
@@ -416,6 +416,7 @@
             app:strokeWidth="1dp"
             android:textAllCaps="false"
             android:textColor="@color/error"
+            app:cornerRadius="16dp"
             android:textSize="16sp" />
 
     </LinearLayout>
