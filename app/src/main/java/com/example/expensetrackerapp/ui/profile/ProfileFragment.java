@@ -346,9 +346,22 @@ public class ProfileFragment extends Fragment {
             String code = codes[position];
             String displayName = displayNames[position];
 
-            // Extract symbol from display name (e.g., "৳ BDT - Bangladeshi Taka")
-            String symbol = displayName.split(" ")[0];
-            String name = displayName.substring(displayName.indexOf("-") + 1).trim();
+            // Set symbol based on currency code
+            String symbol;
+            switch (code) {
+                case Constants.CURRENCY_BDT: symbol = "৳"; break;
+                case Constants.CURRENCY_USD: symbol = "$"; break;
+                case Constants.CURRENCY_INR: symbol = "₹"; break;
+                case Constants.CURRENCY_EUR: symbol = "€"; break;
+                case Constants.CURRENCY_GBP: symbol = "£"; break;
+                default: symbol = "$";
+            }
+
+            // Extract name (e.g. "Bangladeshi Taka" from "৳ BDT - Bangladeshi Taka")
+            String name = displayName;
+            if (displayName.contains("-")) {
+                name = displayName.substring(displayName.indexOf("-") + 1).trim();
+            }
 
             holder.tvSymbol.setText(symbol);
             holder.tvCode.setText(code);

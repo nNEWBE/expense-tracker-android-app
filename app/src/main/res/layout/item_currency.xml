@@ -21,9 +21,9 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="$"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@color/primary"
+            android:textColor="@color/primary_dark"
             android:fontFamily="@font/space_grotesk" />
     </com.google.android.material.card.MaterialCardView>
 
