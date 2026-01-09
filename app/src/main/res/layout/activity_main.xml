@@ -111,10 +111,8 @@
             android:background="@android:color/transparent"
             app:elevation="0dp"
             app:itemIconTint="@color/bottom_nav_colors"
-            app:itemTextColor="@color/bottom_nav_colors"
-            app:labelVisibilityMode="labeled"
-            app:menu="@menu/bottom_navigation"
-            app:itemTextAppearanceActive="@style/Widget.App.BottomNavigation.Detail" />
+            app:labelVisibilityMode="unlabeled"
+            app:menu="@menu/bottom_navigation" />
     </com.google.android.material.bottomappbar.BottomAppBar>
 
     <!-- Floating Action Button -->
