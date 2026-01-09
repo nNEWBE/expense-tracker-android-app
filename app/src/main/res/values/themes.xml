@@ -208,6 +208,12 @@
         <item name="android:fontFamily">@font/jakarta_sans</item>
         <item name="android:textColor">@color/text_hint</item>
     </style>
+    
+    <style name="TextAppearance.App.Chip" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:fontFamily">@font/jakarta_sans</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 
     <style name="Widget.App.BottomNavigation.Detail" parent="TextAppearance.Material3.LabelMedium">
         <item name="android:fontFamily">@font/jakarta_sans</item>

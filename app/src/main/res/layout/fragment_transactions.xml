@@ -7,45 +7,34 @@
     android:orientation="vertical"
     android:background="@color/background">
 
-    <!-- Header Gradient -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <!-- Header -->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/gradient_primary"
-        android:paddingHorizontal="20dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="24dp">
+        android:layout_height="wrap_content">
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/bg_header_curve"
+            android:backgroundTint="@color/primary"/>
 
         <TextView
-            android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
             android:fontFamily="@font/space_grotesk"
             android:text="@string/nav_transactions"
             android:textColor="@color/white"
             android:textSize="28sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="bold" />
+    </FrameLayout>
 
-        <ImageButton
-            android:id="@+id/btnSearch"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_search"
-            app:tint="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tvTitle"
-            app:layout_constraintBottom_toBottomOf="@id/tvTitle" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- Filters Section (Overlapping) -->
+    <!-- Date Filter Chips -->
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-16dp"
+        android:layout_marginTop="8dp"
         android:clipToPadding="false"
         android:paddingHorizontal="20dp"
         android:scrollbars="none">
@@ -89,7 +78,7 @@
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
 
-    <!-- Secondary Filters -->
+    <!-- Dynamic Category Filter Chips -->
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -104,37 +93,8 @@
             android:layout_height="wrap_content"
             app:singleSelection="true"
             app:selectionRequired="true">
-
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.App.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="All Categories" />
-
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.App.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/food" />
-
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.App.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/transport" />
-
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.App.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/shopping" />
-
-             <com.google.android.material.chip.Chip
-                style="@style/Widget.App.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/bills" />
+            
+            <!-- "All Categories" will be added dynamically, along with actual categories from data -->
 
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
