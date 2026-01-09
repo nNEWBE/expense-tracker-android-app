@@ -1,15 +1,20 @@
 package com.example.expensetrackerapp.ui.dashboard;
 
+import android.content.Context;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.expensetrackerapp.R;
 import com.example.expensetrackerapp.auth.AuthManager;
@@ -22,9 +27,12 @@ import com.example.expensetrackerapp.utils.Constants;
 import com.example.expensetrackerapp.utils.CurrencyUtils;
 import com.example.expensetrackerapp.utils.DateUtils;
 import com.example.expensetrackerapp.utils.PreferenceManager;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Dashboard Fragment showing expense summary, balance, and recent transactions.
@@ -37,6 +45,10 @@ public class DashboardFragment extends Fragment {
     private PreferenceManager preferenceManager;
     private AuthManager authManager;
     private TransactionAdapter recentAdapter;
+    private CategoryAdapter categoryAdapter;
+    
+    private List<Expense> allExpenses = new ArrayList<>();
+    private String currentCategory = "All";
 
     @Nullable
     @Override
@@ -88,13 +100,28 @@ public class DashboardFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
+        // Transactions Recycler
         recentAdapter = new TransactionAdapter(requireContext(), new ArrayList<>(), expense -> {
             // Handle transaction click - open edit
         });
-
         binding.rvRecentTransactions.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.rvRecentTransactions.setAdapter(recentAdapter);
         binding.rvRecentTransactions.setNestedScrollingEnabled(false);
+
+        // Category Filter Recycler
+        List<CategoryItem> categories = Arrays.asList(
+            new CategoryItem("All", R.drawable.ic_list),
+            new CategoryItem("Food", R.drawable.ic_restaurant),
+            new CategoryItem("Shopping", R.drawable.ic_shopping_bag),
+            new CategoryItem("Transport", R.drawable.ic_transport)
+        );
+        
+        categoryAdapter = new CategoryAdapter(requireContext(), categories, category -> {
+            currentCategory = category;
+            filterTransactions();
+        });
+        binding.rvCategoryFilters.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
+        binding.rvCategoryFilters.setAdapter(categoryAdapter);
     }
 
     private void observeData() {
@@ -120,27 +147,37 @@ public class DashboardFragment extends Fragment {
 
         // Observe recent transactions
         expenseRepository.getByDateRange(monthRange[0], monthRange[1]).observe(getViewLifecycleOwner(), expenses -> {
-            if (expenses != null && !expenses.isEmpty()) {
-                // Take only first 5 transactions
-                List<Expense> recent = expenses.size() > 5 ? expenses.subList(0, 5) : expenses;
-                recentAdapter.updateData(recent);
-                binding.rvRecentTransactions.setVisibility(View.VISIBLE);
-                binding.layoutEmptyState.setVisibility(View.GONE);
+            if (expenses != null) {
+                allExpenses = expenses;
+                filterTransactions();
             } else {
-                binding.rvRecentTransactions.setVisibility(View.GONE);
-                binding.layoutEmptyState.setVisibility(View.VISIBLE);
+                allExpenses = new ArrayList<>();
+                filterTransactions();
             }
         });
+    }
 
-        // Observe monthly budget
-        userRepository.getMonthlyBudget().observe(getViewLifecycleOwner(), budget -> {
-            if (budget != null && budget > 0) {
-                binding.cardBudget.setVisibility(View.VISIBLE);
-                updateBudgetProgress(budget);
-            } else {
-                binding.cardBudget.setVisibility(View.GONE);
-            }
-        });
+    private void filterTransactions() {
+        List<Expense> filtered;
+        if (currentCategory.equals("All")) {
+            filtered = new ArrayList<>(allExpenses);
+        } else {
+            filtered = allExpenses.stream()
+                    .filter(e -> currentCategory.equalsIgnoreCase(e.getCategory()))
+                    .collect(Collectors.toList());
+        }
+
+        // Only show top 5 of filtered results for the dashboard
+        List<Expense> recent = filtered.size() > 5 ? filtered.subList(0, 5) : filtered;
+        
+        if (!recent.isEmpty()) {
+            recentAdapter.updateData(recent);
+            binding.rvRecentTransactions.setVisibility(View.VISIBLE);
+            binding.layoutEmptyState.setVisibility(View.GONE);
+        } else {
+            binding.rvRecentTransactions.setVisibility(View.GONE);
+            binding.layoutEmptyState.setVisibility(View.VISIBLE);
+        }
     }
 
     private void updateBalance() {
@@ -154,45 +191,12 @@ public class DashboardFragment extends Fragment {
         double income = CurrencyUtils.parseAmount(incomeText);
 
         double balance = income - expense;
-        binding.tvBalance.setText(CurrencyUtils.formatAmount(balance, currency));
-
-        // Set balance color
-        if (balance >= 0) {
-            binding.tvBalance.setTextColor(getResources().getColor(R.color.income, null));
+        // Format with space between sign and amount for design: "- $66.00"
+        String formattedBalance = CurrencyUtils.formatAmount(Math.abs(balance), currency);
+        if (balance < 0) {
+            binding.tvBalance.setText("- " + formattedBalance);
         } else {
-            binding.tvBalance.setTextColor(getResources().getColor(R.color.expense, null));
-        }
-    }
-
-    private void updateBudgetProgress(double budget) {
-        String currency = preferenceManager.getCurrency();
-        String expenseText = binding.tvTotalExpense.getText().toString();
-        double spent = CurrencyUtils.parseAmount(expenseText);
-
-        double remaining = budget - spent;
-        int percentage = budget > 0 ? (int) ((spent / budget) * 100) : 0;
-        percentage = Math.min(percentage, 100);
-
-        binding.tvBudgetAmount.setText(CurrencyUtils.formatAmount(budget, currency));
-        binding.tvBudgetSpent.setText(CurrencyUtils.formatAmount(spent, currency) + " spent");
-        binding.progressBudget.setProgress(percentage);
-
-        if (remaining > 0) {
-            binding.tvBudgetRemaining.setText(CurrencyUtils.formatAmount(remaining, currency) + " remaining");
-            binding.tvBudgetRemaining.setTextColor(getResources().getColor(R.color.success, null));
-        } else {
-            binding.tvBudgetRemaining
-                    .setText("Budget exceeded by " + CurrencyUtils.formatAmount(Math.abs(remaining), currency));
-            binding.tvBudgetRemaining.setTextColor(getResources().getColor(R.color.error, null));
-        }
-
-        // Set progress color based on percentage
-        if (percentage >= 100) {
-            binding.progressBudget.setIndicatorColor(getResources().getColor(R.color.error, null));
-        } else if (percentage >= 80) {
-            binding.progressBudget.setIndicatorColor(getResources().getColor(R.color.warning, null));
-        } else {
-            binding.progressBudget.setIndicatorColor(getResources().getColor(R.color.primary, null));
+            binding.tvBalance.setText(formattedBalance);
         }
     }
 
@@ -204,5 +208,91 @@ public class DashboardFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+    
+    // --- Helper Classes ---
+
+    private static class CategoryItem {
+        String name;
+        int iconRes;
+
+        CategoryItem(String name, int iconRes) {
+            this.name = name;
+            this.iconRes = iconRes;
+        }
+    }
+
+    private class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
+        private Context context;
+        private List<CategoryItem> items;
+        private OnCategoryClickListener listener;
+        private int selectedPosition = 0;
+
+        CategoryAdapter(Context context, List<CategoryItem> items, OnCategoryClickListener listener) {
+            this.context = context;
+            this.items = items;
+            this.listener = listener;
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(context).inflate(R.layout.item_category_filter, parent, false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+            CategoryItem item = items.get(position);
+            boolean isSelected = position == selectedPosition;
+
+            holder.tvName.setText(item.name);
+            holder.ivIcon.setImageResource(item.iconRes);
+
+            if (isSelected) {
+                holder.card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.primary));
+                holder.card.setStrokeWidth(0);
+                holder.ivIcon.setColorFilter(ContextCompat.getColor(context, R.color.white));
+                holder.tvName.setTextColor(ContextCompat.getColor(context, R.color.primary));
+                holder.tvName.setTypeface(null, android.graphics.Typeface.BOLD);
+            } else {
+                holder.card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white));
+                holder.card.setStrokeColor(ContextCompat.getColor(context, R.color.divider));
+                holder.card.setStrokeWidth(2); // 1dp approx
+                holder.ivIcon.setColorFilter(ContextCompat.getColor(context, R.color.text_secondary));
+                holder.tvName.setTextColor(ContextCompat.getColor(context, R.color.text_secondary));
+                holder.tvName.setTypeface(null, android.graphics.Typeface.NORMAL);
+            }
+
+            holder.itemView.setOnClickListener(v -> {
+                int oldPos = selectedPosition;
+                selectedPosition = holder.getAdapterPosition();
+                notifyItemChanged(oldPos);
+                notifyItemChanged(selectedPosition);
+                listener.onCategoryClick(item.name);
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return items.size();
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder {
+            MaterialCardView card;
+            ImageView ivIcon;
+            TextView tvName;
+
+            ViewHolder(@NonNull View itemView) {
+                super(itemView);
+                card = itemView.findViewById(R.id.cardCategory);
+                ivIcon = itemView.findViewById(R.id.ivCategoryIcon);
+                tvName = itemView.findViewById(R.id.tvCategoryName);
+            }
+        }
+    }
+
+    interface OnCategoryClickListener {
+        void onCategoryClick(String category);
     }
 }
